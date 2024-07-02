@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+#include <time.h>
+
+// Hàm sàng nguyên thủy (Sieve of Eratosthenes)
+void sieveOfEratosthenes(int max, bool prime[]) {
+    for (int i = 0; i <= max; i++) prime[i] = true;
+    prime[0] = prime[1] = false; // 0 và 1 không phải là số nguyên tố
+
+    for (int p = 2; p * p <= max; p++) {
+        if (prime[p]) {
+            for (int i = p * p; i <= max; i += p) {
+                prime[i] = false;
+            }
+        }
+    }
+}
+
+int main() {
+    int n;
+    printf("Nhap so n: "); 
+    scanf("%d", &n);
+
+    int sinh[n];
+    srand(time(0));
+    for (int i = 0; i < n; i++) {
+        sinh[i] = rand() % 100 + 1; // Giới hạn các số ngẫu nhiên từ 1 đến 100 cho dễ kiểm tra
+    }
+
+    // Tìm số lớn nhất trong mảng để tạo mảng sàng nguyên thủy
+    int maxVal = sinh[0];
+    for (int i = 1; i < n; i++) {
+        if (sinh[i] > maxVal) {
+            maxVal = sinh[i];
+        }
+    }
+
+    // Tạo mảng đánh dấu số nguyên tố
+    bool prime[maxVal + 1];
+    sieveOfEratosthenes(maxVal, prime);
+
+    // In các số trong mảng và kiểm tra số nguyên tố
+    for (int i = 0; i < n; i++) {
+        printf("%d ", sinh[i]);
+    }
+    printf("\n");
+
+    for (int i = 0; i < n; i++) {
+        if (prime[sinh[i]]) {
+            printf("%d Day la so nguyen to\n", sinh[i]);
+        } else {
+            printf("%d Day khong phai la so nguyen to\n", sinh[i]);
+        }
+    }
+
+    return 0;
+}

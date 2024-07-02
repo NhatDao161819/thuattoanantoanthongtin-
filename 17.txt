@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+#include <string.h>
+
+// Hàm sàng nguyên thủy (Sieve of Eratosthenes)
+void sieveOfEratosthenes(int max, bool prime[]) {
+    memset(prime, true, (max + 1) * sizeof(bool));
+    prime[0] = prime[1] = false; // 0 và 1 không phải là số nguyên tố
+
+    for (int p = 2; p * p <= max; p++) {
+        if (prime[p]) {
+            for (int i = p * p; i <= max; i += p) {
+                prime[i] = false;
+            }
+        }
+    }
+}
+
+int main() {
+    int n, A, B, C, ra, x;
+    int maxVal = 0;
+
+    printf("Nhap so n: "); scanf("%d", &n);
+    printf("Nhap A: "); scanf("%d", &A);
+    printf("Nhap B: "); scanf("%d", &B);
+    printf("Nhap C: "); scanf("%d", &C);
+
+
+    for (x = 1; x < n; x++) {
+        ra = A * x * x + B * x + C;
+        if (ra > maxVal) {
+            maxVal = ra;
+        }
+    }
+
+    
+    bool prime[maxVal + 1];
+    sieveOfEratosthenes(maxVal, prime);
+
+    
+    for (x = 1; x < n; x++) {
+        ra = A * x * x + B * x + C;
+        if (ra > 1 && prime[ra]) {
+            printf("%d la so nguyen to cua tong A*x^2 + B*x + C = %d\n", x, ra);
+            break;
+        }
+        if (x == n - 1) {
+            printf("Khong co gia tri thoa man\n");
+        }
+    }
+
+    return 0;
+}

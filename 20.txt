@@ -1,0 +1,42 @@
+#include <stdio.h>
+
+
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+int main() {
+    int M, N, D;
+
+    printf("Nhap M: ");
+    scanf("%d", &M);
+    printf("Nhap N: ");
+    scanf("%d", &N);
+    printf("Nhap D: ");
+    scanf("%d", &D);
+
+    
+    if (M <= 0 || N <= 0 || D <= 0 || M >= 1000 || N >= 1000 || D >= 1000) {
+        printf("Gia tri khong hop le! M, N, D phai trong khoang 0 < M, N, D < 1000.\n");
+        return 1;
+    }
+
+    printf("Cac cap so (A, B) co uoc so chung lon nhat la %d:\n", D);
+
+    // Duyệt qua tất cả các cặp số (A, B) trong khoảng (M, N)
+    for (int A = M; A <= N; A++) {
+        for (int B = M; B <= N; B++) {
+            // Kiểm tra nếu GCD(A, B) bằng D
+            if (gcd(A, B) == D) {
+                printf("(%d, %d)\n", A, B);
+            }
+        }
+    }
+
+    return 0;
+}
