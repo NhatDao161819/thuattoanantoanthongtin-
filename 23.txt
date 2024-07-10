@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+
+// Hàm sàng nguyên thủy (Sieve of Eratosthenes)
+void sieveOfEratosthenes(int max, bool prime[]) {
+    memset(prime, true, (max + 1) * sizeof(bool));
+    prime[0] = prime[1] = false; // 0 và 1 không phải là số nguyên tố
+
+    for (int p = 2; p * p <= max; p++) {
+        if (prime[p]) {
+            for (int i = p * p; i <= max; i += p) {
+                prime[i] = false;
+            }
+        }
+    }
+}
+
+int main() {
+    int A, B;
+    int sum = 0;
+
+    // Nhập các giá trị từ bàn phím
+    printf("Nhap vao A: ");
+    scanf("%d", &A);
+    printf("Nhap vao B: ");
+    scanf("%d", &B);
+
+    // Tạo mảng đánh dấu số nguyên tố với kích thước tối đa là B
+    bool prime[B + 1];
+    sieveOfEratosthenes(B, prime);
+
+    printf("Cac so nguyen to trong Khoang [A, B] la: ");
+    for (int i = A; i <= B; i++) {
+        if (prime[i]) {
+            printf("%d\t", i);
+            sum += i;
+        }
+    }
+    printf("\n");
+    printf("Sum = %d\n", sum);
+
+    // Kiểm tra tổng có phải là số nguyên tố không
+    if (sum <= B && prime[sum]) {
+        printf("YES\n"); // YES neu 'Sum' la so nguyen to
+    } else {
+        // Nếu tổng lớn hơn B, cần kiểm tra lại tổng có phải là số nguyên tố không
+        bool isPrime = true;
+        if (sum > 1) {
+            for (int i = 2; i * i <= sum; i++) {
+                if (sum % i == 0) {
+                    isPrime = false;
+                    break;
+                }
+            }
+        } else {
+            isPrime = false;
+        }
+        if (isPrime) {
+            printf("YES\n"); // YES neu 'Sum' la so nguyen to
+        } else {
+            printf("NO\n");  // NO neu 'Sum' khong la so nguyen to
+        }
+    }
+
+    return 0;
+}
