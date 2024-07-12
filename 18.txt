@@ -1,14 +1,11 @@
 #include<stdio.h>
 #include<math.h>
-#include<windows.h>
 int main()
 {
-    int p,w,t,sel;
+    int p,w,t;
     w=8;    p=2147483647;
-    t = (log2(p)+0.5)/w + 0.5;
-    label:
+    t =ceil(log2(p)/w);
     int a,b,i,A[t],B[t];
-            system("cls");
             printf("\nNhap a: "); scanf("%d",&a);
             printf("\nNhap b: "); scanf("%d",&b);
             int c=a;
@@ -37,6 +34,6 @@ int main()
     printf("\nTong = (%d,[",e);
     for(i=t-1;i>=0;i--) printf("%d ",C[i]);
     printf("])");
-    printf("\ntong la %d ",c+d);
+    printf("\ntong 2 so duoi dang so nguyen la %d",c+d);
     return 0;
 }
